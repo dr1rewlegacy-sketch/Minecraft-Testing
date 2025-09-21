@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MC Web Panel</title>
+</head>
+<body>
+    <h1>Minecraft Server Panel</h1>
+    <button onclick="startServer()">Start Server</button>
+    <button onclick="stopServer()">Stop Server</button>
+    <pre id="console"></pre>
+
+    <script>
+        const apiBase = "YOUR_COLAB_PUBLIC_URL"; // Replace with Colab public URL
+
+        async function startServer() {
+            const res = await fetch(apiBase + "/start", { method: "POST" });
+            const data = await res.json();
+            console.log(data);
+        }
+
+        async function stopServer() {
+            const res = await fetch(apiBase + "/stop", { method: "POST" });
+            const data = await res.json();
+            console.log(data);
+        }
+
+        async function fetchLogs() {
+            const res = await fetch(apiBase + "/logs");
+            const data = await res.json();
+            document.getElementById("console").innerText = data.logs.join("\n");
+        }
+
+        setInterval(fetchLogs, 2000); // refresh logs every 2 seconds
+    </script>
+</body>
+</html>
